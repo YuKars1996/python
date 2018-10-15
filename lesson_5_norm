@@ -1,0 +1,22 @@
+import os
+import sys
+import filemapper as fm
+
+n = os.listdir()
+print("Папки в вашей директории: ")
+
+def see(n):
+    a = 1
+    for m in n :
+        print (a,('{:<3}'.format(m)))
+        a += 1
+
+print(see(n))
+
+def vyb (n):
+    key = input("Введите номер папки, с которой хотите работать: ")
+    if key == '1':
+        k_2 = input("Что вы хотели бы сделать с папкой? " "1.Перейти в папку " "2.Просмотреть содержимое текущей папки " "3.Удалить папку " "4.Создать папку ")
+        if k_2 == "1":
+
+print(vyb(n))
