@@ -52,21 +52,21 @@ def playing():
         answer = "a"
         while answer not in "ynq":
             answer = input("Есть ли данная бочка у вас? Нажмите y(yes)/n(no), или q для выхода из игры: ")
-            if answer == "q":
-                break
-            elif (answer == "y" and count_in_cart(player_cart, next_count) or (answer == "n" and not count_in_cart(player_cart, next_count))):
-                print("Вы правы! Следующий ход.")
-            else:
-                print("Вы проиграли!")
-                break
-            player_cart = list(update_cart(player_cart, next_count))
-            comp_cart = list(update_cart(comp_cart, next_count))
-            if empty(player_cart):
-                print("Вся ваша карточка заполнена.")
-                break
-            if empty(comp_cart):
-                print("Вся карточка компьютера заполнена.")
-                break
+        if answer == "q":
+              break
+        elif (answer == "y" and count_in_cart(player_cart, next_count) or (answer == "n" and not count_in_cart(player_cart, next_count))):
+            print("Вы правы! Следующий ход.")
+        else:
+            print("Вы проиграли!")
+            break
+        player_cart = list(update_cart(player_cart, next_count))
+        comp_cart = list(update_cart(comp_cart, next_count))
+        if empty(player_cart):
+            print("Вся ваша карточка заполнена.")
+            break
+        if empty(comp_cart):
+            print("Вся карточка компьютера заполнена.")
+            break
 
 playing()
 
