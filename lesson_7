@@ -21,19 +21,19 @@ def max_set_l(cart_list):
 def see_cart(cart):
     cart = copy.deepcopy(cart)
     booking = " ".join(['{:>2}' for i in range(9)])
-    for l in cart:
+    for line in cart:
         for s in " " * 4:
-            l.insert(random.randint(0, len(l) - 1), s)
-    return [booking.format(*l) for l in cart]
+            line.insert(random.randint(0, len(line) - 1), s)
+    return [booking.format(*line) for line in cart]
 
 def update_cart(cart, count):
-    for l in cart:
-        yield ["-" if x == count else x for x in l]
+    for line in cart:
+        yield ["-" if x == count else x for x in line]
 
 def empty(cart):
-    for l in cart:
-        for k in l:
-            if k != " ":
+    for line in cart:
+        for elt in line:
+            if elt != "-":
                 return False
     return True
 
@@ -53,20 +53,22 @@ def playing():
         while answer not in "ynq":
             answer = input("Есть ли данная бочка у вас? Нажмите y(yes)/n(no), или q для выхода из игры: ")
         if answer == "q":
-              break
+            break
         elif (answer == "y" and count_in_cart(player_cart, next_count) or (answer == "n" and not count_in_cart(player_cart, next_count))):
             print("Вы правы! Следующий ход.")
         else:
-            print("Вы проиграли!")
+            print("Это неверный ответ. Пожалуйста, начните снова.")
             break
         player_cart = list(update_cart(player_cart, next_count))
         comp_cart = list(update_cart(comp_cart, next_count))
         if empty(player_cart):
-            print("Вся ваша карточка заполнена.")
+            print("Вы выиграли!")
             break
         if empty(comp_cart):
-            print("Вся карточка компьютера заполнена.")
+            print("Компьютер выиграл вас!")
             break
 
 playing()
+
+
 
