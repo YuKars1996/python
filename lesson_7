@@ -1,0 +1,74 @@
+_Autor_ = Karsakova Y.A.
+
+import random
+import copy
+
+max_set = 90
+all_set_cart = 15
+str_cart = 5
+
+def cart ():
+    numbers = random.sample(range(1, max_set + 1),all_set_cart)
+    card = [sorted(numbers[i:i + str_cart]) for i in range(0, len(numbers), str_cart)]
+    return card
+
+def cart_list():
+    return random.sample(range(1, max_set + 1), 90)
+
+def max_set_l(cart_list):
+    return cart_list.pop()
+
+def see_cart(cart):
+    cart = copy.deepcopy(cart)
+    booking = " ".join(['{:>2}' for i in range(9)])
+    for line in cart:
+        for s in " " * 4:
+            line.insert(random.randint(0, len(line) - 1), s)
+    return [booking.format(*line) for line in cart]
+
+def update_cart(cart, count):
+    for line in cart:
+        yield ["-" if x == count else x for x in line]
+
+def empty(cart):
+    for line in cart:
+        for elt in line:
+            if elt != "-":
+                return False
+    return True
+
+def count_in_cart(cart, count):
+    return count in [count for l in cart for count in l]
+
+def playing():
+    print("Приветствуем вас в игре 'лото'! Вашим соперником будет компьютер. Если вы ошибетесь - проиграете. Начнем!")
+    player_cart, comp_cart = cart(), cart()
+    count = cart_list()
+    while True:
+        next_count = max_set_l(count)
+        print("Новая бочка: {}. Осталось боченков: {}".format(next_count, len(count)))
+        print("{0} Ваши карты: {0}\n{1}\n{2}\n{3}".format('-' * 6, *see_cart(player_cart)))
+        print("{0} Карты компьютера: {0}\n{1}\n{2}\n{3}".format('-' * 5, *see_cart(comp_cart)))
+        answer = "a"
+        while answer not in "ynq":
+            answer = input("Есть ли данная бочка у вас? Нажмите y(yes)/n(no), или q для выхода из игры: ")
+        if answer == "q":
+            break
+        elif (answer == "y" and count_in_cart(player_cart, next_count) or (answer == "n" and not count_in_cart(player_cart, next_count))):
+            print("Вы правы! Следующий ход.")
+        else:
+            print("Это неверный ответ. Пожалуйста, начните снова.")
+            break
+        player_cart = list(update_cart(player_cart, next_count))
+        comp_cart = list(update_cart(comp_cart, next_count))
+        if empty(player_cart):
+            print("Вы выиграли!")
+            break
+        if empty(comp_cart):
+            print("Компьютер выиграл вас!")
+            break
+
+playing()
+
+
+

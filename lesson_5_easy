@@ -1,0 +1,53 @@
+# _Autor_ = Karsakova Yulia
+
+# Задача-1:
+# Напишите скрипт, создающий директории dir_1 - dir_9 в папке,
+# из которой запущен данный скрипт.
+# И второй скрипт, удаляющий эти папки.
+
+import os
+
+b = 1
+
+while b < 10:
+        dir_papk = os.path.join(os.getcwd(), "dir_{}".format(b))
+        b += 1
+        try:
+            os.mkdir(dir_papk)
+        except FileExistsError:
+         print("Такая папка уже есть по адресу ", os.getcwd())
+        if b > 9:
+         print("Все папки успешно созданы")
+         
+path = r'C:\Users\Василий\PycharmProjects\Ll'
+exclude = {'dir'}
+os.chdir(path)
+
+dirs = (d for d in os.listdir(path)
+        if os.path.isdir(d) and d not in exclude)
+
+list(map(shutil.rmtree, dirs))
+
+# Задача-2:
+# Напишите скрипт, отображающий папки текущей директории.
+
+import os
+
+folder = []
+for i in os.walk(os.getcwd()):
+    folder.append(i)
+
+print(folder)
+
+
+# Задача-3:
+# Напишите скрипт, создающий копию файла, из которого запущен данный скрипт.
+import os
+import sys
+
+
+g = sys.argv
+
+g = os.path.abspath('g')
+if not os.path.exists(g):
+    os.makedirs(g)
